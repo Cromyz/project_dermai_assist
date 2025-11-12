@@ -120,5 +120,6 @@ webcolors==25.10.0
 webencodings==0.5.1
 websocket-client==1.9.0
 
-streamlit==1.24.1
-tensorflow
+
+streamlit==1.51.0
+tensorflow==2.20.0
