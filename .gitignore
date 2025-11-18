@@ -16,6 +16,7 @@ dist/
 *.iml
 *.egg-info
 *.vscode
+__pycache__/
 
 # Data files
 *.csv
