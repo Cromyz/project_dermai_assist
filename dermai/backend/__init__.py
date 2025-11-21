@@ -6,5 +6,6 @@ available_models = []
 
 for model_name in MODEL_DATA.keys():
     model = load_derm_model(model_name)
+    print(model)
     model.name = model_name
     available_models.append(model)
