@@ -15,7 +15,7 @@ reinstall_package:
 	pip install -r requirements.txt && pip install -e .
 
 run_api:
-	uvicorn ml_op_reboot.api_file:app --reload --port ${PORT}
+	uvicorn dermai.backend.fast:app --reload --port ${PORT}
 
 build_local_image:
 	docker build -t ${IMAGE}:${ENV} .
