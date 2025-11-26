@@ -1,15 +1,14 @@
-import pandas as pd
 from PIL import Image
 from io import BytesIO
 from fastapi import FastAPI, File, UploadFile, Form
 from fastapi.middleware.cors import CORSMiddleware
 
 from dermai.params import MODEL_DATA
-from dermai.interface.main import pred
-from dermai.backend import available_models
+from dermai.interface.main import pred, security_check
+from dermai.backend import AVAILABLE_MODELS
 
 app = FastAPI()
-# app.state.models = available_models ?
+# app.state.models = AVAILABLE_MODELS ?
 
 app.add_middleware(
     CORSMiddleware,
@@ -21,7 +20,16 @@ app.add_middleware(
 
 @app.get("/models")
 async def list_model_labels():
-    return [v["label"] for v in MODEL_DATA.values()]
+    return [v["label"] for v in list(MODEL_DATA.values())[1:]]
+
+@app.post("/control")
+async def control(img: UploadFile=File(...)):
+    contents = await img.read()
+    img = Image.open(BytesIO(contents))
+
+    allowed = security_check(img)
+
+    return {"security": "passed" if allowed else "failed"}
 
 @app.post("/predict")
 async def predict(
@@ -31,11 +39,10 @@ async def predict(
     contents = await img.read()
     img = Image.open(BytesIO(contents))
 
-    model_index = [d["label"] for d in MODEL_DATA.values()].index(model_label)
-    model = available_models[model_index]
+    model_index = [d["label"] for d in MODEL_DATA.values()].index(model_label) - 1
+    model = AVAILABLE_MODELS[model_index]
 
     prediction = pred(img, model)
-    print(prediction.to_dict("list"))
 
     return prediction.to_dict("list")
 

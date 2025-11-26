@@ -17,10 +17,9 @@ def load_derm_model(name: str) -> Model:
         with NamedTemporaryFile(suffix=".keras", delete=True) as tmp:
             blob.download_to_filename(tmp.name)
 
-            # 2) Load the model from the local path (string)
             model = load_model(
                 tmp.name,
-                custom_objects={"preprocess_input": MODEL_DATA[name]["preprocess_method"]},
+                custom_objects={"preprocess_input": MODEL_DATA[name].get("preprocess_method")},
                 safe_mode=False,
             )
         print("✅ Loaded!")

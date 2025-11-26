@@ -9,6 +9,11 @@ BUCKET_NAME = os.environ.get("BUCKET_NAME")
 MODEL_TARGET = os.environ.get("MODEL_TARGET")
 
 MODEL_DATA = {
+    "mole_notmole_final_v2": {
+        "label": "Security",
+        "preprocess_method": None,
+        "image_dim": (224, 224),
+    },
     "densenet": {
         "label": "DenseNet",
         "preprocess_method": preprocess_input_densenet,
