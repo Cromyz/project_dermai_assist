@@ -24,6 +24,8 @@ async def list_model_labels():
 
 @app.post("/control")
 async def control(img: UploadFile=File(...)):
+    print("Requesting relevance...")
+
     contents = await img.read()
     img = Image.open(BytesIO(contents))
 
@@ -36,6 +38,8 @@ async def predict(
         model_label: str = Form(...),
         img: UploadFile=File(...),
     ):
+    print("Requesting prediction...")
+
     contents = await img.read()
     img = Image.open(BytesIO(contents))
 
