@@ -23,7 +23,7 @@ def pred(image: Image.Image, model: Model) -> pd.DataFrame:
     pred = pd.DataFrame(raw).T
     pred.index = pred.index.map(CODE_TO_CLASS)
     pred.columns = ["Probabilities"]
-    pred = pred.sort_values(by="Probabilities", ascending=False)
+    # pred = pred.sort_values(by="Probabilities", ascending=False) # do this in the frontend, that adjusts the probs ;)
     pred["color"] = pred.index.map(CLASS_TO_COLOR)
     pred["hexa"] = pred["color"].map(COLOR_TO_HEXA)
     pred.reset_index(inplace=True)
