@@ -1,7 +1,9 @@
 import os
 from keras.applications.vgg16 import preprocess_input as preprocess_input_vgg16
-from keras.applications.densenet import preprocess_input as preprocess_input_densenet
-from keras.applications.efficientnet_v2 import preprocess_input as preprocess_input_efficientnet
+# from keras.applications.densenet import preprocess_input as preprocess_input_densenet
+# from keras.applications.efficientnet_v2 import preprocess_input as preprocess_input_efficientnet
+
+from dermai.ml_logic.loss import weighted_categorical_crossentropy
 
 ROOT_PATH = os.path.dirname(os.path.dirname(__file__))
 LOCAL_REGISTRY_PATH =  os.path.join(os.path.expanduser('~'), ".lewagon", "dermai", "training_outputs")
@@ -12,21 +14,37 @@ MODEL_DATA = {
     "mole_notmole_final_v2": {
         "label": "Security",
         "preprocess_method": None,
+        "custom_objects": None,
+        "image_dim": (224, 224),
+    },
+    "inception_v3_2": {
+        "label": "Inception v3 best",
+        "preprocess_method": None,
+        "custom_objects": {"weighted_categorical_crossentropy": weighted_categorical_crossentropy},
         "image_dim": (224, 224),
     },
     "densenet": {
         "label": "DenseNet",
-        "preprocess_method": preprocess_input_densenet,
+        "preprocess_method": None,
+        "custom_objects": None,
+        "image_dim": (224, 224),
+    },
+    "inception_v3": {
+        "label": "Inception v3",
+        "preprocess_method": None,
+        "custom_objects": None,
         "image_dim": (224, 224),
     },
     "vgg16": {
         "label": "VGG16",
-        "preprocess_method": preprocess_input_vgg16,
+        "preprocess_method": None,
+        "custom_objects": {"preprocess_input": preprocess_input_vgg16},
         "image_dim": (256, 256),
     },
     "efficientnet": {
         "label": "EfficientNet",
-        "preprocess_method": preprocess_input_efficientnet,
+        "preprocess_method": None,
+        "custom_objects": None,
         "image_dim": (224, 224),
     },
 }

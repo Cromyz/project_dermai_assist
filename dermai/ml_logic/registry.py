@@ -19,7 +19,7 @@ def load_derm_model(name: str) -> Model:
 
             model = load_model(
                 tmp.name,
-                custom_objects={"preprocess_input": MODEL_DATA[name].get("preprocess_method")},
+                custom_objects= MODEL_DATA[name]["custom_objects"],
                 safe_mode=False,
             )
         print("✅ Loaded!")
